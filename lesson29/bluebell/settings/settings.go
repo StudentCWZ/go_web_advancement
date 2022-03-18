@@ -24,6 +24,7 @@ type Config struct {
 	*MySQLConfig     `mapstructure:"mysql"`
 	*RedisConfig     `mapstructure:"redis"`
 	*SnowFlakeConfig `mapstructure:"snowflake"`
+	*EncryptConfig   `mapstructure:"encrypt"`
 }
 
 type AppConfig struct {
@@ -62,6 +63,10 @@ type RedisConfig struct {
 type SnowFlakeConfig struct {
 	StartTime string `mapstructure:"start_time"`
 	MachineId int64  `mapstructure:"machine_id"`
+}
+
+type EncryptConfig struct {
+	SecretKey string `mapstructure:"secret_key"`
 }
 
 func Init() (err error) {

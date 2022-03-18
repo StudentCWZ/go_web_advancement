@@ -10,6 +10,7 @@
 package main
 
 import (
+	"GoWeb/lesson29/bluebell/controller"
 	"GoWeb/lesson29/bluebell/dao/mysql"
 	"GoWeb/lesson29/bluebell/dao/redis"
 	"GoWeb/lesson29/bluebell/logger"
@@ -62,6 +63,11 @@ func main() {
 	// 雪花算法：分布式 ID 生成器
 	if err := snowflake.Init(settings.Conf.SnowFlakeConfig.StartTime, settings.Conf.SnowFlakeConfig.MachineId); err != nil {
 		fmt.Printf("init snowflake failed, err: %v\n", err)
+		return
+	}
+	// 初始化 gin 框架内置的翻译器
+	if err := controller.InitTrans("zh"); err != nil {
+		fmt.Printf("Init validator trans failed, err: %v\n", err)
 		return
 	}
 	// 5. 注册路由

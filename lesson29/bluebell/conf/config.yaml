@@ -15,7 +15,7 @@ mysql:
   port: 13306
   user: "root"
   password: "gree123"
-  db: "sql_demo"
+  db: "bluebell"
   max_open_connection: 20
   max_idle_connection: 10
 
@@ -29,3 +29,6 @@ redis:
 snowflake:
   start_time: "2020-07-01"
   machine_id: 1
+
+encrypt:
+  secret_key: "StudentCWZ"

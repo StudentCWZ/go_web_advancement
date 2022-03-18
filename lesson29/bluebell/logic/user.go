@@ -11,17 +11,33 @@ package logic
 
 import (
 	"GoWeb/lesson29/bluebell/dao/mysql"
+	"GoWeb/lesson29/bluebell/models"
+	"GoWeb/lesson29/bluebell/pkg/encrypt"
 	"GoWeb/lesson29/bluebell/pkg/snowflake"
+	"fmt"
 )
 
 // SignUp 存放业务逻辑代码
-func SignUp() {
+func SignUp(p *models.ParamsSignUp) (err error) {
 	// 1. 判断用户存不存在
-	mysql.QueryUserByUsername()
+	if err := mysql.CheckUserExit(p.Username); err != nil {
+		// 数据库查询出错
+		return err
+	}
 	// 2. 生成 UID
-	snowflake.GenID()
+	userID := snowflake.GenID()
+	// 构造一个 User 实例
+	user := &models.User{
+		UserID:   userID,
+		Username: p.Username,
+		Password: p.Password,
+	}
+	fmt.Printf("%#v\n", user)
 	// 3. 密码加密
+	user.Password = encrypt.EncryptPassword(user.Password)
+	fmt.Printf("%#v\n", user)
 	// 4. 保存进数据库
-	mysql.InsertUser()
+	err = mysql.InsertUser(user)
 	// redis.xxx ...
+	return
 }
