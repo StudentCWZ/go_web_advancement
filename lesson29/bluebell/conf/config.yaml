@@ -32,3 +32,6 @@ snowflake:
 
 encrypt:
   secret_key: "StudentCWZ"
+
+gin:
+  mode: "debug"

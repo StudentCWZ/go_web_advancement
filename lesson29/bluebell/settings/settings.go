@@ -25,6 +25,7 @@ type Config struct {
 	*RedisConfig     `mapstructure:"redis"`
 	*SnowFlakeConfig `mapstructure:"snowflake"`
 	*EncryptConfig   `mapstructure:"encrypt"`
+	*GinConfig       `mapstructure:"gin"`
 }
 
 type AppConfig struct {
@@ -67,6 +68,10 @@ type SnowFlakeConfig struct {
 
 type EncryptConfig struct {
 	SecretKey string `mapstructure:"secret_key"`
+}
+
+type GinConfig struct {
+	Mode string `mapstructure:"mode"`
 }
 
 func Init() (err error) {

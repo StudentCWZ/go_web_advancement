@@ -41,3 +41,12 @@ func SignUp(p *models.ParamsSignUp) (err error) {
 	// redis.xxx ...
 	return
 }
+
+// Login 存放业务逻辑代码
+func Login(p *models.ParamsLogin) (err error) {
+	user := &models.User{
+		Username: p.Username,
+		Password: p.Password,
+	}
+	return mysql.Login(user)
+}
