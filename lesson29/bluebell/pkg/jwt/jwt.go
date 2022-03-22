@@ -10,12 +10,13 @@
 package jwt
 
 import (
+	"GoWeb/lesson29/bluebell/settings"
 	"errors"
 	"github.com/dgrijalva/jwt-go"
 	"time"
 )
 
-const TokenExpireDuration = time.Hour * 2
+//const TokenExpireDuration = time.Hour * 2
 
 var mySecret = []byte("迷途小书童")
 
@@ -36,8 +37,8 @@ func GenToken(userID int64, username string) (string, error) {
 		UserID:   userID,
 		Username: username, // 自定义字段
 		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(TokenExpireDuration).Unix(), // 过期时间
-			Issuer:    "bluebell",                                 // 签发人
+			ExpiresAt: time.Now().Add(time.Duration(settings.Conf.JwtExpire) * time.Hour).Unix(), // 过期时间
+			Issuer:    "bluebell",                                                                // 签发人
 		},
 	}
 	// 使用指定的签名方法创建签名对象

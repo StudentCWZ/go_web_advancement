@@ -13,13 +13,6 @@ import (
 	"GoWeb/lesson29/bluebell/models"
 	"GoWeb/lesson29/bluebell/pkg/encrypt"
 	"database/sql"
-	"errors"
-)
-
-var (
-	ErrorUserExist       = errors.New("用户已存在, 请勿重复注册！")
-	ErrorUserNotExist    = errors.New("用户不存在")
-	ErrorInvalidPassword = errors.New("密码错误")
 )
 
 // CheckUserExit 把每一步数据库操作封装成函数

@@ -26,6 +26,7 @@ type Config struct {
 	*SnowFlakeConfig `mapstructure:"snowflake"`
 	*EncryptConfig   `mapstructure:"encrypt"`
 	*GinConfig       `mapstructure:"gin"`
+	*AuthConfig      `mapstructure:"auth"`
 }
 
 type AppConfig struct {
@@ -72,6 +73,10 @@ type EncryptConfig struct {
 
 type GinConfig struct {
 	Mode string `mapstructure:"mode"`
+}
+
+type AuthConfig struct {
+	JwtExpire int `mapstructure:"jwt_expire"`
 }
 
 func Init() (err error) {

@@ -3,6 +3,9 @@ app:
   mode: "dev"
   port: 9090
 
+auth:
+  jwt_expire: 8760
+
 log:
   level: "debug"
   filename: "bluebell.log"
