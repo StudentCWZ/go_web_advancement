@@ -12,6 +12,7 @@ package router
 import (
 	"GoWeb/lesson29/bluebell/controller"
 	"GoWeb/lesson29/bluebell/logger"
+	"GoWeb/lesson29/bluebell/middlewares"
 	"GoWeb/lesson29/bluebell/settings"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -26,7 +27,8 @@ func Setup() *gin.Engine {
 	// 注册业务路由
 	r.POST("/signup", controller.SignUpHandler)
 	r.POST("/login", controller.LoginHandler)
-	r.GET("/ping", func(c *gin.Context) {
+	r.GET("/ping", middlewares.JWTAuthMiddleware(), func(c *gin.Context) {
+		// 如果是登录的用户， 判断请求头中是否有有效的 JWT
 		c.String(http.StatusOK, "pong")
 	})
 	r.NoRoute(func(c *gin.Context) {

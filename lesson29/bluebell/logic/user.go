@@ -13,6 +13,7 @@ import (
 	"GoWeb/lesson29/bluebell/dao/mysql"
 	"GoWeb/lesson29/bluebell/models"
 	"GoWeb/lesson29/bluebell/pkg/encrypt"
+	"GoWeb/lesson29/bluebell/pkg/jwt"
 	"GoWeb/lesson29/bluebell/pkg/snowflake"
 	"fmt"
 )
@@ -43,10 +44,16 @@ func SignUp(p *models.ParamsSignUp) (err error) {
 }
 
 // Login 存放业务逻辑代码
-func Login(p *models.ParamsLogin) (err error) {
+func Login(p *models.ParamsLogin) (token string, err error) {
 	user := &models.User{
 		Username: p.Username,
 		Password: p.Password,
 	}
-	return mysql.Login(user)
+	// 传递的是指针，就能拿到 user.UserID
+	if err := mysql.Login(user); err != nil {
+		return "", err
+	}
+	fmt.Printf("%+v\n", user)
+	// 生成 JWT
+	return jwt.GenToken(user.UserID, user.Username)
 }
