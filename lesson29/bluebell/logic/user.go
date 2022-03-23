@@ -44,16 +44,21 @@ func SignUp(p *models.ParamsSignUp) (err error) {
 }
 
 // Login 存放业务逻辑代码
-func Login(p *models.ParamsLogin) (token string, err error) {
-	user := &models.User{
+func Login(p *models.ParamsLogin) (user *models.User, err error) {
+	user = &models.User{
 		Username: p.Username,
 		Password: p.Password,
 	}
 	// 传递的是指针，就能拿到 user.UserID
 	if err := mysql.Login(user); err != nil {
-		return "", err
+		return nil, err
 	}
 	fmt.Printf("%+v\n", user)
 	// 生成 JWT
-	return jwt.GenToken(user.UserID, user.Username)
+	token, err := jwt.GenToken(user.UserID, user.Username)
+	if err != nil {
+		return
+	}
+	user.Token = token
+	return
 }

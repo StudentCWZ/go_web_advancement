@@ -76,7 +76,7 @@ func LoginHandler(c *gin.Context) {
 		return
 	}
 	// 2. 业务处理
-	token, err := logic.Login(p)
+	user, err := logic.Login(p)
 	if err != nil {
 		// 记录错误日志
 		zap.L().Error("Logic.Login failed", zap.String("username", p.Username), zap.Error(err))
@@ -89,5 +89,9 @@ func LoginHandler(c *gin.Context) {
 		return
 	}
 	// 3. 返回响应
-	ResponseSuccess(c, token)
+	ResponseSuccess(c, gin.H{
+		"user_id":  fmt.Sprintf("%d", user.UserID), // 前端 id 值最大为 2^53-1；后端 int64 最大值为 2^63-1；不一致可能会导致失真
+		"username": user.Username,
+		"token":    user.Token,
+	})
 }
