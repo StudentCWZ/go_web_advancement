@@ -19,7 +19,7 @@ func CreatePost(p *models.Post) (err error) {
 
 func GetPostById(pid int64) (post *models.Post, err error) {
 	post = new(models.Post)
-	sqlStr := `select post_id, title, content, author_id, community_id, create_time from post where post_id + ?`
+	sqlStr := `select post_id, title, content, author_id, community_id, create_time from post where post_id = ?`
 	err = db.Get(post, sqlStr, pid)
 	return
 }
