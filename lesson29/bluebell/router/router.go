@@ -35,6 +35,8 @@ func Setup() *gin.Engine {
 		v1.POST("/post", controller.CreatePostHandler)
 		v1.GET("/post/:id", controller.GetPostDetailHandler)
 		v1.GET("/posts", controller.GetPostListHandler)
+		// 根据时间或分数获取帖子列表
+		v1.GET("/posts2", controller.GetPostListTwoHandler)
 		v1.POST("/vote", controller.PostVoteHandler)
 	}
 	r.NoRoute(func(c *gin.Context) {
