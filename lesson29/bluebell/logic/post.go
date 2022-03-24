@@ -11,6 +11,7 @@ package logic
 
 import (
 	"GoWeb/lesson29/bluebell/dao/mysql"
+	"GoWeb/lesson29/bluebell/dao/redis"
 	"GoWeb/lesson29/bluebell/models"
 	"GoWeb/lesson29/bluebell/pkg/snowflake"
 	"go.uber.org/zap"
@@ -20,7 +21,12 @@ func CreatePost(p *models.Post) (err error) {
 	// 1. 生成 post_id
 	p.ID = snowflake.GenID()
 	// 2. 保存到数据库
-	return mysql.CreatePost(p)
+	err = mysql.CreatePost(p)
+	if err != nil {
+		return
+	}
+	err = redis.CreatePost(p.ID)
+	return
 }
 
 // GetPostById 根据帖子 id 查询帖子详情数据
