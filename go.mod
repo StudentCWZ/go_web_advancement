@@ -24,6 +24,7 @@ require (
 	github.com/smartystreets/goconvey v1.7.2 // indirect
 	github.com/sony/sonyflake v1.0.0
 	github.com/spf13/viper v1.10.1
+	github.com/swaggo/gin-swagger v1.4.1 // indirect
 	github.com/swaggo/swag v1.8.0 // indirect
 	github.com/urfave/cli/v2 v2.4.0 // indirect
 	go.uber.org/zap v1.21.0
