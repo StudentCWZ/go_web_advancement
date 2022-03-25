@@ -21,6 +21,15 @@ import (
 )
 
 // SignUpHandler 处理注册请求的函数
+// @Summary 用户注册请求接口
+// @Description 用户注册请求接口
+// @Tags 用户相关接口
+// @Accept application/json
+// @Produce application/json
+// @Param object body models.ParamsSignUp false "注册参数"
+// @Security ApiKeyAuth
+// @Success 200 {object} _Response
+// @Router /signup [post]
 func SignUpHandler(c *gin.Context) {
 	// 1. 获取参数和参数校验
 	p := new(models.ParamsSignUp)
@@ -60,6 +69,17 @@ func SignUpHandler(c *gin.Context) {
 	ResponseSuccess(c, nil)
 }
 
+// LoginHandler 处理用户登录的函数
+// @Summary 用户登录请求接口
+// @Description 用户登录请求接口
+// @Tags 用户相关接口
+// @Accept application/json
+// @Produce application/json
+// @Param Authorization header string false "Bearer 用户令牌"
+// @Param object body models.ParamsLogin false "登录参数"
+// @Security ApiKeyAuth
+// @Success 200 {object} ResponseData
+// @Router /login [post]
 func LoginHandler(c *gin.Context) {
 	// 1. 获取请求参数和参数校验
 	p := new(models.ParamsLogin)

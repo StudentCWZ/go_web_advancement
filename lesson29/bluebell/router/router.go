@@ -11,11 +11,15 @@ package router
 
 import (
 	"GoWeb/lesson29/bluebell/controller"
+	_ "GoWeb/lesson29/bluebell/docs" // 千万不要忘了导入把你上一步生成的docs
 	"GoWeb/lesson29/bluebell/logger"
 	"GoWeb/lesson29/bluebell/middlewares"
 	"GoWeb/lesson29/bluebell/settings"
 	"github.com/gin-gonic/gin"
 	"net/http"
+
+	gs "github.com/swaggo/gin-swagger"
+	"github.com/swaggo/gin-swagger/swaggerFiles"
 )
 
 func Setup() *gin.Engine {
@@ -24,6 +28,8 @@ func Setup() *gin.Engine {
 	// 创建一个路由引擎
 	r := gin.New()
 	r.Use(logger.GinLogger(), logger.GinRecovery(true))
+	// 注册 swagger api 相关路由
+	r.GET("/swagger/*any", gs.WrapHandler(swaggerFiles.Handler))
 	// 注册业务路由
 	v1 := r.Group("/api/v1")
 	v1.POST("/signup", controller.SignUpHandler)

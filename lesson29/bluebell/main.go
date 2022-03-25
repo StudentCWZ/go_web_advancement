@@ -29,7 +29,17 @@ import (
 )
 
 // Go web 开发较通用的脚手架
+// @title bluebell 项目接口文档
+// @version 1.0
+// @description Go web 开发进阶项目实战 --> 源自李文周
 
+// @contact.name StudentCWZ
+// @contact.email 330459539@qq.com
+
+// @license.name Apache 2.0
+// @license.url https://www.apache.org/licenses/LICENSE-2.0.html
+
+// @host 127.0.0.1:9090/api/v1
 func main() {
 	// 1. 加载配置
 	if err := settings.Init(); err != nil {

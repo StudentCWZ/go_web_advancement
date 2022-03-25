@@ -16,8 +16,17 @@ import (
 	"strconv"
 )
 
+// CommunityHandler 社区详情
+// @Summary 获取社区详情接口
+// @Description 获取社区详情接口
+// @Tags 社区相关接口
+// @Accept application/json
+// @Produce application/json
+// @Param Authorization header string false "Bearer 用户令牌"
+// @Security ApiKeyAuth
+// @Success 200 {object} _ResponseCommunityList
+// @Router /community [get]
 // ---- 跟社区相关的 ----
-
 func CommunityHandler(c *gin.Context) {
 	// 查询到所有社区(community_id, community_name) 以列表的形式返回
 	data, err := logic.GetCommunityList()
@@ -30,6 +39,16 @@ func CommunityHandler(c *gin.Context) {
 }
 
 // CommunityDetailHandler 社区分类详情
+// @Summary 获取社区分类详情接口
+// @Description 获取社区分类详情接口
+// @Tags 社区相关接口
+// @Accept application/json
+// @Produce application/json
+// @Param Authorization header string false "Bearer 用户令牌"
+// @Param id query string false "社区 id 参数"
+// @Security ApiKeyAuth
+// @Success 200 {object} _ResponseCommunityDetailList
+// @Router /community/:id [get]
 func CommunityDetailHandler(c *gin.Context) {
 	// 1. 获取社区 id
 	idStr := c.Param("id") // 获取路径参数
