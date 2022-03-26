@@ -5,6 +5,7 @@ go 1.16
 require (
 	github.com/BurntSushi/toml v1.0.0 // indirect
 	github.com/bwmarrin/snowflake v0.3.0
+	github.com/cosmtrek/air v1.29.0 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fsnotify/fsnotify v1.5.1
 	github.com/gin-gonic/gin v1.7.7
@@ -27,7 +28,7 @@ require (
 	github.com/swaggo/swag v1.8.0
 	go.uber.org/zap v1.21.0
 	golang.org/x/net v0.0.0-20220225172249-27dd8689420f // indirect
-	golang.org/x/sys v0.0.0-20220319134239-a9b59b0215f8 // indirect
+	golang.org/x/sys v0.0.0-20220325203850-36772127a21f // indirect
 	golang.org/x/tools v0.1.10 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 )
