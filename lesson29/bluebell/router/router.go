@@ -29,6 +29,13 @@ func Setup() *gin.Engine {
 	// 创建一个路由引擎
 	r := gin.New()
 	r.Use(logger.GinLogger(), logger.GinRecovery(true))
+	// 加载静态文件
+	r.LoadHTMLFiles("./templates/index.html")
+	r.Static("/static", "./static")
+	// 根路由直接访问 index.html
+	r.GET("/", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "index.html", nil)
+	})
 	r.GET("/ping", func(c *gin.Context) {
 		c.String(http.StatusOK, "pong")
 	})
@@ -38,15 +45,18 @@ func Setup() *gin.Engine {
 	v1 := r.Group("/api/v1")
 	v1.POST("/signup", controller.SignUpHandler)
 	v1.POST("/login", controller.LoginHandler)
+	{
+		v1.GET("/posts", controller.GetPostListHandler)
+		// 根据时间或分数获取帖子列表
+		v1.GET("/posts2", controller.GetPostListTwoHandler)
+	}
+
 	v1.Use(middlewares.JWTAuthMiddleware(), middlewares.RateLimitMiddleware(2*time.Second, 1)) // 应用 JWT 认证中间件以及令牌桶限流中间件
 	{
 		v1.GET("/community", controller.CommunityHandler)
 		v1.GET("/community/:id", controller.CommunityDetailHandler)
-		v1.POST("/post", controller.CreatePostHandler)
 		v1.GET("/post/:id", controller.GetPostDetailHandler)
-		v1.GET("/posts", controller.GetPostListHandler)
-		// 根据时间或分数获取帖子列表
-		v1.GET("/posts2", controller.GetPostListTwoHandler)
+		v1.POST("/post", controller.CreatePostHandler)
 		v1.POST("/vote", controller.PostVoteHandler)
 	}
 	pprof.Register(r) // 注册 pprof 相关路由
