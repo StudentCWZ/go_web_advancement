@@ -14,7 +14,7 @@ log:
   max_backups: 7
 
 mysql:
-  host: "127.0.0.1"
+  host: localhost
   port: 13306
   user: "root"
   password: "gree123"
@@ -23,7 +23,7 @@ mysql:
   max_idle_connection: 10
 
 redis:
-  host: "127.0.0.1"
+  host: localhost
   port: 16379
   password: ""
   db: 0
