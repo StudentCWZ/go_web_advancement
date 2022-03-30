@@ -1,25 +1,36 @@
 # yaml 配置
+# 利用 docker-compose 部署项目，conf/config.yaml 中 mysql 和 redis 的 host 要改为容器名，port 分别要改为 3306 和 6379
 version: "3.7"
 services:
   redis507:
     image: "redis:5.0.7"
+    container_name: go_redis
     ports:
       - "26379:6379"
-  mysql8021:
-    image: "mysql:8.0.21"
+  mysql8019:
+    image: "mysql:8.0.19"
+    container_name: go_mysql
     restart: always
     ports:
       - "23306:3306"
-    command: "--default-authentication-plugin=mysql_native_password --init-file /data/application/init.sql"
+    command:
+      --default-authentication-plugin=mysql_native_password
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_general_ci
+      --explicit_defaults_for_timestamp=true
+      --lower_case_table_names=1
+      --init-file /data/application/init.sql
     environment:
       MYSQL_ROOT_PASSWORD: "gree123"
+      MYSQL_DATABASE: "bluebell"
     volumes:
       - ./init.sql:/data/application/init.sql
   bluebell_app:
+    container_name: go_bluebell
     build: .
-    command: sh -c "./wait-for.sh redis507:6379 mysql8021:3306 -- ./bluebell_app"
+    command: sh -c "./wait-for.sh redis507:6379 mysql8019:3306 -- ./bluebell_app"
     depends_on:
-      - mysql8021
+      - mysql8019
       - redis507
     ports:
       - "9090:9090"

@@ -44,13 +44,13 @@ RUN set -eux; \
     apt-get install -y --no-install-recommends netcat; \
     chmod 755 wait-for.sh
 
-# 单个 dockerfile 需要运行的命令；如果利用 docker compose + wait-for.sh 该行可以注释
+# 单个 dockerfile 需要运行的命令，需要则取消注释；如果利用 docker compose + wait-for.sh 该行可以注释
 # ENTRYPOINT ["/bluebell_app"]
 
-# 镜像构建命令(终端运行)
+# 镜像构建命令(终端命令)
 # docker build . -t docker_bluebell
 
-# 启动容器的命令(联合启动容器命令-终端运行): 此时需要将配置文件中 mysql 和 redis 中的 host 分别改为 mysql 和 redis
+# 启动容器的命令(联合启动容器命令-终端命令): 此时需要将配置文件中 mysql 和 redis 中的 host 分别改为 mysql 和 redis
 # docker run --name docker_bluebell --link=mysql:mysql --link=redis:redis -p 9090:9090 docker_bluebell
 
 # 该 dockerfile 只有在 bluebell 是一个根目录生效

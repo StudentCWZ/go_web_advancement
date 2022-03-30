@@ -1,7 +1,3 @@
--- modify remote login
-USE mysql;
-UPDATE user SET host = '%' where user = 'root';
-FLUSH PRIVILEGES;
 -- create the databases
 CREATE DATABASE IF NOT EXISTS bluebell;
 USE bluebell;

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TIMEOUT=15
+TIMEOUT=600
 QUIET=0
 
 ADDRS=()
