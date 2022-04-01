@@ -110,9 +110,6 @@ func GetPostListTwo(p *models.ParamsPostList) (data []*models.ApiPostDetail, err
 	// 提前查询好每篇帖子的投票数
 	voteData, err := redis.GetPostVoteData(ids)
 	if err != nil {
-		return
-	}
-	if err != nil {
 		return nil, err
 	}
 	// 将帖子的作者以及分区信息查询出来填充到帖子中
@@ -131,7 +128,7 @@ func GetPostListTwo(p *models.ParamsPostList) (data []*models.ApiPostDetail, err
 		}
 		postDetail := &models.ApiPostDetail{
 			AuthorName:      user.Username,
-			VoteScore:       voteData[idx],
+			VoteNum:         voteData[idx],
 			Post:            post,
 			CommunityDetail: community,
 		}
@@ -182,7 +179,7 @@ func GetCommunityPostListHandler(p *models.ParamsPostList) (data []*models.ApiPo
 		}
 		postDetail := &models.ApiPostDetail{
 			AuthorName:      user.Username,
-			VoteScore:       voteData[idx],
+			VoteNum:         voteData[idx],
 			Post:            post,
 			CommunityDetail: community,
 		}

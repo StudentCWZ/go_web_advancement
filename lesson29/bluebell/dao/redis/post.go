@@ -47,6 +47,7 @@ func GetPostVoteData(ids []string) (data []int64, err error) {
 	pipeline := client.TxPipeline()
 	for _, id := range ids {
 		key := getRedisKey(KeyPostVotedZSetPrefix + id)
+		// 查找 key 中分数是 1 的元素的数量 --> 统计每篇帖子的赞成票的数量
 		pipeline.ZCount(key, "1", "1")
 	}
 	cmderData, err := pipeline.Exec()

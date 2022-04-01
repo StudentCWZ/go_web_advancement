@@ -49,7 +49,7 @@ func PostVoteHandler(c *gin.Context) {
 	}
 	// 具体投票的业务逻辑
 	if err := logic.VoteForPost(userID, p); err != nil {
-		zap.L().Error("logic.VoteForPost(userID, p) failed", zap.Error(err))
+		zap.L().Error("logic.VoteForPost() failed", zap.Error(err))
 		ResponseError(c, CodeServerBusy)
 		return
 	}

@@ -140,6 +140,7 @@ func GetPostListTwoHandler(c *gin.Context) {
 	data, err := logic.GetPostListNew(p) // 更新：合二为一
 	if err != nil {
 		zap.L().Error("logic.GetPostList() failed", zap.Error(err))
+		ResponseError(c, CodeServerBusy)
 		return
 	}
 	// 2. 返回响应

@@ -42,7 +42,7 @@ const (
 
 var (
 	ErrorVoteTimeExpire = errors.New("投票时间已过")
-	ErrorVoteRepested   = errors.New("不允许重复投票")
+	ErrorVoteRepeated   = errors.New("不允许重复投票")
 )
 
 func CreatePost(postID, communityID int64) (err error) {
@@ -77,7 +77,7 @@ func VoteForPost(userID, postID string, value float64) (err error) {
 	ov := client.ZScore(getRedisKey(KeyPostVotedZSetPrefix+postID), userID).Val()
 	// 如果这一次投票的值和之前保存的值一致，就提示不允许重复投票
 	if value == ov {
-		return ErrorVoteRepested
+		return ErrorVoteRepeated
 	}
 	var op float64
 	if value > ov {
@@ -90,18 +90,12 @@ func VoteForPost(userID, postID string, value float64) (err error) {
 	pipeline.ZIncrBy(getRedisKey(KeyPostScoreZSet), op*diff*scorePerVote, postID)
 	// 3. 记录用户为该帖子投票的分数
 	if value == 0 {
-		pipeline.ZRem(getRedisKey(KeyPostVotedZSetPrefix+postID), postID)
-		if err != nil {
-			return
-		}
+		pipeline.ZRem(getRedisKey(KeyPostVotedZSetPrefix+postID), userID)
 	} else {
 		pipeline.ZAdd(getRedisKey(KeyPostVotedZSetPrefix+postID), redis.Z{
-			Score:  0, // 赞成票还是反对票
-			Member: nil,
+			Score:  value, // 赞成票还是反对票
+			Member: userID,
 		})
-		if err != nil {
-			return
-		}
 	}
 	_, err = pipeline.Exec()
 	return
